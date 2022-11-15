@@ -1,0 +1,19 @@
+:root {
+    --base-color: #e3e3d8;
+    --content-color: #92879b;
+    --active-color: #a6cdde;
+  }
+
+
+.custom-cart {
+    border: none;
+    outline: none;
+    width: 30px;
+    height: 30px;
+    color: var(--content-color);
+}
+
+.custom-cart button:hover {
+  display: contents;
+}
+
