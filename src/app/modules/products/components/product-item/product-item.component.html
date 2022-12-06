@@ -1,0 +1,23 @@
+<li>
+    <a
+    style="cursor: pointer"
+    class="list-group-item clearfix"
+    [routerLink]="['/products/detail',  product.id]"
+   
+  >
+    <div class="card">
+      <div class="card-body">
+        <img [src]="product.image" />
+      </div>
+      <div class="card-footer">
+        <div class="price-container">
+          <h3>{{ product.title }}</h3>
+          <p>${{product.price}}</p>
+        </div>
+         <div class="button-group">
+          <button><i class="fas fa-cart-plus"></i></button>
+        </div> 
+      </div>
+    </div>
+  </a>
+  </li>

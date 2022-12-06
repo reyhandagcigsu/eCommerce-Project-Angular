@@ -1,0 +1,32 @@
+:root {
+    --base-color: #e3e3d8;
+    --content-color: #92879b;
+    --active-color: #a6cdde;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: var(--base-color);
+    font-family: 'Courier New', Courier, monospace;
+    /* overflow: hidden; */
+  }
+  
+  .product-list-container {
+    overflow: hidden;
+  }
+  
+  ul.product-list {
+    display: flex;
+    flex-wrap: wrap;
+   justify-content: start;
+    margin: 0 -1rem;
+    list-style: none;
+  }
+
+  .lists {
+    max-width: 25%;
+    padding: 1rem;
+  }

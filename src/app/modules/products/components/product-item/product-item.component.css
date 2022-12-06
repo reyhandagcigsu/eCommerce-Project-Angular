@@ -1,0 +1,78 @@
+:root {
+    --base-color: #e3e3d8;
+    --content-color: #92879b;
+    --active-color: #a6cdde;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .card {
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 10px 5px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.4s linear;
+    overflow: scroll;
+  }
+  
+  .card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 20px 45px 0px rgba(0, 0, 0, 0.75);
+  }
+  
+  .card .card-body {
+    flex: 1;
+    position: relative;
+  }
+  
+  .card .card-body img {
+    display: block;
+    height: 200px;
+    width: 200px;
+    object-fit: contain;
+    object-position: top center;
+  }
+  
+  .card .card-footer {
+    height: 150px;
+    display: flex;
+  }
+  
+  .card .price-container {
+    flex: 1;
+    padding: 1rem;
+    border-right: 1px solid var(--content-color);
+  }
+  
+  .card .price-container h3 {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding-bottom: 0.2rem;
+   
+  }
+
+  .card .card-footer .button-group {
+    flex-basis: 50px;
+  }
+  
+  .card .card-footer .button-group button {
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    transition: background-color 0.4s ease-in;
+    color: var(--content-color);
+    font-weight: bold;
+    padding-top: 0;
+    transition: padding-top 0.4s;
+  }
+  
+  .card .card-footer .button-group button:hover {
+    background-color: var(--active-color);
+    padding-top: 10px;
+  }
+  
