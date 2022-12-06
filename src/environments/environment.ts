@@ -11,8 +11,8 @@ export const environment = {
     appId: "1:776318496954:web:b76d904f6123eb4a59d283",
     measurementId: "G-DQESQC9G4X"
   },
-  apiDomain1: 'https://fakestoreapi.com',
-  apiDomain2: 'https://ecommerce-angular-2f5fa-default-rtdb.firebaseio.com',
-  apiDomain3: 'https://identitytoolkit.googleapis.com'
+  FakeStoreApiDomain: 'https://fakestoreapi.com',
+  FirebaseRealtimeDbApiDomain: 'https://ecommerce-angular-2f5fa-default-rtdb.firebaseio.com',
+  authApiDomain: 'https://identitytoolkit.googleapis.com'
 };
 

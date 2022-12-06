@@ -2,8 +2,7 @@ import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { IProduct } from 'src/app/shared/models/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Pipe } from '@angular/core';
-import { tap, map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { combineLatest, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { characterEditor } from '../helpers/text-modifiers';
 import { environment } from '../../../environments/environment';
@@ -12,16 +11,17 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class ProductsService {
-  urlFakeStoreApiDomain: string = environment.apiDomain1;
+  urlFakeStoreApiDomain: string = environment.FakeStoreApiDomain;
   products: IProduct[] = [];
   productsChanged = new Subject<IProduct[]>();
   public search = new BehaviorSubject<string>('');
   errorMessage: string = '';
+  fashion: Observable<any>;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getProducts() {
-    this.http
+    return this.http
       .get<IProduct[]>(`${this.urlFakeStoreApiDomain}/products`)
       .pipe(
         tap((products) => {
@@ -29,24 +29,19 @@ export class ProductsService {
             return { ...item, category: characterEditor(item.category) };
           });
         })
-      )
-      .subscribe((data: IProduct[]) => {
-        this.products = data;
-        this.productsChanged.next(this.products);
-      });
+      );
   }
 
   getProduct(id: number) {
-    return this.http.get<IProduct>(`${this.urlFakeStoreApiDomain}/products/${id}`);
+    return this.http.get<IProduct>(
+      `${this.urlFakeStoreApiDomain}/products/${id}`
+    );
   }
 
   getCategoryProducts(category: string) {
-    this.http
-      .get<IProduct[]>(`${this.urlFakeStoreApiDomain}/products/category/` + category)
-      .subscribe((data: IProduct[]) => {
-        this.products = data;
-        this.productsChanged.next(this.products.slice());
-      });
+    return this.http.get<IProduct[]>(
+      `${this.urlFakeStoreApiDomain}/products/category/` + category
+    );
   }
 
   getMenAndWomenCategoryProducts() {
@@ -58,14 +53,6 @@ export class ProductsService {
       `${this.urlFakeStoreApiDomain}/products/category/women%27s%20clothing`
     );
 
-    const fashion = combineLatest(men, women)
-      .pipe(
-        tap((products) => {
-          const products_: IProduct[] = [...products[0], ...products[1]];
-          this.products = products_;
-          this.productsChanged.next(products_);
-        })
-      )
-      .subscribe();
+    return (this.fashion = combineLatest(men, women));
   }
 }

@@ -10,9 +10,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class ShoppingService {
-  urlFirebaseRealtimeDbApiDomain: string = environment.apiDomain2;
+  urlFirebaseRealtimeDbApiDomain: string = environment.FirebaseRealtimeDbApiDomain;
   shoppingProducts: IProduct[] = [];
-  shoppingCartChanged = new Subject<IProduct[]>();
+   shoppingCartChanged = new Subject<IProduct[]>();
   shoppingCartItemAdded = new Subject<number>();
   currentShopItemCount = 0;
 
@@ -64,9 +64,8 @@ export class ShoppingService {
   }
 
   deleteProductsFromCart(key: string) {
-    this.http
-      .delete<void>(`${this.urlFirebaseRealtimeDbApiDomain}/products/${key}.json`)
-      .subscribe();
+    return this.http
+      .delete<void>(`${this.urlFirebaseRealtimeDbApiDomain}/products/${key}.json`);
   }
 
   addNewCartItem() {

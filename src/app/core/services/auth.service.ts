@@ -19,7 +19,7 @@ interface IAuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  urlAuthApiDomain: string = environment.apiDomain3;
+  urlAuthApiDomain: string = environment.authApiDomain;
   key: string = 'AIzaSyDICUyMrbRQ2JbkxGydTh0jKrAbNGF_UEk';
   user = new BehaviorSubject<User>(null);
   userID: string;

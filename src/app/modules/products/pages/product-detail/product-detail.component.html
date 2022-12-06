@@ -6,23 +6,23 @@
         <div class="card text-black">
           <!--  <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i> -->
           <img
-            [src]="product.image"
+            [src]="product?.image"
             class="card-img-top"
           />
           <div class="card-body">
             <div class="text-center">
-              <h5 class="card-title">{{ product.title }}</h5>
-              <p class="text-muted mb-4">{{ product.category }}</p>
+              <h5 class="card-title">{{ product?.title }}</h5>
+              <p class="text-muted mb-4">{{ product?.category }}</p>
             </div>
             <div>
               <div class="d-flex justify-content-between">
-                <p>{{ product.description }}</p>
+                <p>{{ product?.description }}</p>
               </div>
               <div class="text-center">
                 <ngb-rating
                   class="mb-4"
                   [max]="5"
-                  [(rate)]="product.rating.rate"
+                  [(rate)]="product?.rating.rate"
                   [readonly]="true"
                 ></ngb-rating>
               </div>
@@ -30,7 +30,7 @@
             <div
               class="d-flex justify-content-between total font-weight-bold mt-4"
             >
-              <span>Price</span><span>${{product.price}}</span>
+              <span>Price</span><span>${{product?.price}}</span>
               <button
                 type="button"
                 class="custom-cart"

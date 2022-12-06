@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
         auth: 'my-auth-token',
       }),
     };
-
+    //debugger;
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
