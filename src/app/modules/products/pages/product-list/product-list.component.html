@@ -1,6 +1,9 @@
 <app-header></app-header>
 <div class="product-list-container">
-  <ul class="product-list" >
+  <ul class="product-list"  >
+    <div *ngIf="isLoading" style="text-align: center ;">
+      <app-loading-spinner> </app-loading-spinner>
+    </div> 
     <app-product-item class="lists" 
       *ngFor="let product of products  | filter:searchKey:'title'; let i = index"
       [product]="product"

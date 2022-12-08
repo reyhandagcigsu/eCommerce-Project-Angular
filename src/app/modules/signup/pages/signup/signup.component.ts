@@ -41,6 +41,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     signupForm.reset();
   }
 
+  onHandleError(){
+    this.error = null;
+  }
+
   ngOnDestroy(): void {
     this.subscription$?.unsubscribe();
   }

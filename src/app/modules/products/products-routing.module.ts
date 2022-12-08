@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const parentRoutes: Routes = [
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   {
     path: 'products',
     component: ProductListComponent,

@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 export class ProductDetailComponent implements OnInit {
   product: IProduct;
   id: number;
+  isLoading = false;
 
   constructor(
     private producstsService: ProductsService,
@@ -25,7 +26,9 @@ export class ProductDetailComponent implements OnInit {
       this.id = +params['id'];
     });
 
+    this.isLoading= true;
     this.producstsService.getProduct(this.id).subscribe((product: IProduct) => {
+      this.isLoading = false;
       this.product = product;
     });
   }

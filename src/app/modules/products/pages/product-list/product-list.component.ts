@@ -19,6 +19,7 @@ export class ProductListComponent implements OnInit {
   subscription$2: Subscription;
   params: { category: string };
   searchKey: string = '';
+  isLoading = false;
 
   constructor(
     private productsService: ProductsService,
@@ -27,8 +28,10 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading= true;
    this.productsService.getProducts().subscribe(
     (products: IProduct[]) => {
+      this.isLoading = false;
       this.products = products;
       this.productsService.productsChanged.next(this.products);
     });

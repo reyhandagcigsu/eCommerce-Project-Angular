@@ -8,9 +8,11 @@
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="alert alert-danger" *ngIf="error">
+          <!-- <div class="alert alert-danger" *ngIf="error">
             <p> {{error}} </p>
-          </div>
+          </div> -->
+         <!--  <app-alert [message]="error" *ngIf="error" (close)="onHandleError()" ></app-alert>  here alert component added dynamically-->
+         <ng-template appPlaceHolder></ng-template>
           <div *ngIf="isLoading" style="text-align: center ;">
             <app-loading-spinner> </app-loading-spinner>
           </div>

@@ -1,19 +1,26 @@
 :root {
-    --base-color: #e3e3d8;
-    --content-color: #92879b;
-    --active-color: #a6cdde;
-  }
-
+  --base-color: #e3e3d8;
+  --content-color: #92879b;
+  --active-color: #a6cdde;
+}
 
 .custom-cart {
-    border: none;
-    outline: none;
-    width: 30px;
-    height: 30px;
-    color: var(--content-color);
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  color: var(--content-color);
+}
+
+.card-img-top {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  width: 300px;
+  object-fit: contain;
 }
 
 .custom-cart button:hover {
   display: contents;
 }
-

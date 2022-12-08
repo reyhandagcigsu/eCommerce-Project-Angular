@@ -6,13 +6,17 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { AlertComponent } from './components/alert/alert.component';
+import { PlaceHolderDirective } from './directives/place-holder.directive';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     LoadingSpinnerComponent,
-    FilterPipe
+    FilterPipe,
+    AlertComponent,
+    PlaceHolderDirective
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     FilterPipe,
     HeaderComponent,
     LoadingSpinnerComponent,
-    FormsModule
+    AlertComponent,
+    FormsModule,
+    PlaceHolderDirective,
   ]
 })
 export class SharedModule { }

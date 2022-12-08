@@ -5,6 +5,9 @@
       <div class="col-md-8 col-lg-6 col-xl-4">
         <div class="card text-black">
           <!--  <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i> -->
+          <div *ngIf="isLoading" style="text-align: center ;">
+            <app-loading-spinner> </app-loading-spinner>
+          </div> 
           <img
             [src]="product?.image"
             class="card-img-top"
