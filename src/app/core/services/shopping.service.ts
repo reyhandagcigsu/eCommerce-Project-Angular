@@ -1,34 +1,32 @@
 import { IProduct } from 'src/app/shared/models/product.model';
 import { Injectable } from '@angular/core';
-import { Subject, map, take, exhaustMap, filter } from 'rxjs';
+import { map, take, exhaustMap, filter, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from '../../../environments/environment';
-
+import { Cart } from 'src/app/shared/models/cart.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingService {
-  urlFirebaseRealtimeDbApiDomain: string = environment.FirebaseRealtimeDbApiDomain;
-  shoppingProducts: IProduct[] = [];
-   shoppingCartChanged = new Subject<IProduct[]>();
-  shoppingCartItemAdded = new Subject<number>();
-  currentShopItemCount = 0;
+  urlFirebaseRealtimeDbApiDomain: string =
+    environment.FirebaseRealtimeDbApiDomain;
+  
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addProductInCart(product: IProduct) {
+  addProductInCart(cart: Cart) {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
-        product = {
-          ...product,
+        cart = {
+          ...cart,
           userId: user.id,
         };
         return this.http.post<IProduct>(
-          `${this.urlFirebaseRealtimeDbApiDomain}/products.json`,
-          product,
+          `${this.urlFirebaseRealtimeDbApiDomain}/carts.json`,
+          cart,
           {
             params: new HttpParams().set('auth', user.token),
           }
@@ -41,40 +39,19 @@ export class ShoppingService {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
-        return this.http.get<IProduct[]>(
-          `${this.urlFirebaseRealtimeDbApiDomain}/products.json`,
+        return this.http.get<Cart>(
+          `${this.urlFirebaseRealtimeDbApiDomain}/carts.json`,
           {
             params: new HttpParams().set('auth', user.token),
           }
         );
-      }),
-      map((products) => {
-        const arr: IProduct[] = [];
-        let tempProduct: IProduct;
-        for (let key in products) {
-          if (products.hasOwnProperty(key)) {
-            tempProduct = products[key];
-            tempProduct.key = key;
-            arr.push(tempProduct);
-          }
-        }
-        return arr;
       })
     );
   }
 
   deleteProductsFromCart(key: string) {
-    return this.http
-      .delete<void>(`${this.urlFirebaseRealtimeDbApiDomain}/products/${key}.json`);
-  }
-
-  addNewCartItem() {
-    this.currentShopItemCount++;
-    this.shoppingCartItemAdded.next(this.currentShopItemCount);
-  }
-
-  setShoppingCartItemCount(count: number) {
-    this.currentShopItemCount = count;
-    this.shoppingCartItemAdded.next(this.currentShopItemCount);
+    return this.http.delete<void>(
+      `${this.urlFirebaseRealtimeDbApiDomain}/carts/${key}.json`
+    );
   }
 }

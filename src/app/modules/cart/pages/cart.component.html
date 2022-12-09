@@ -15,23 +15,23 @@
                     class="d-flex justify-content-between align-items-center mb-5"
                   >
                     <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                    <h6 class="mb-0 text-muted">{{ products?.length }} items</h6>
+                  <!--   <h6 class="mb-0 text-muted">{{ products?.length }} items</h6> -->
                   </div>
                   <hr class="my-4" />
 
                   <div
                     class="row mb-4 d-flex justify-content-between align-items-center"
-                    *ngFor="let product of products; let i = index"
+                    *ngFor="let cart of carts; let i = index"
                   >
                     <div class="col-md-2 col-lg-2 col-xl-2">
-                      <img [src]="product.image" class="img-fluid rounded-3" />
+                      <img [src]="cart?.product.image" class="img-fluid rounded-3" />
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                      <h6 class="text-muted">{{ product?.category }}</h6>
-                      <h6 class="text-black mb-0">{{ product?.title }}</h6>
+                      <h6 class="text-muted">{{ cart?.product.category }}</h6>
+                      <h6 class="text-black mb-0">{{ cart?.product.title }}</h6>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                      <!--  <button
+                       <button
                         class="btn btn-link px-2"
                         onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                       >
@@ -52,15 +52,15 @@
                         onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                       >
                         <i class="fas fa-plus"></i>
-                      </button> -->
+                      </button>
                     </div>
                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                      <h6 class="mb-0">$ {{ product?.price }}</h6>
+                      <h6 class="mb-0">$ {{ cart?.product.price }}</h6>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                       <button
                         class="text-muted"
-                        (click)="deleteItemFromCart(product.key, product.id)"
+                        (click)="deleteItemFromCart(cart.key)"
                       >
                         <i class="fas fa-times"></i>
                       </button>
@@ -86,21 +86,9 @@
                   <hr class="my-4" />
 
                   <div class="d-flex justify-content-between mb-4">
-                    <h5 class="text-uppercase">{{ products?.length }} items</h5>
+                    <h5 class="text-uppercase">{{ carts.length }} items</h5>
                     <h5>$ {{ totalPrice }}</h5>
                   </div>
-
-                  <!--  <h5 class="text-uppercase mb-3">Shipping</h5>
-
-                  <div class="mb-4 pb-2">
-                    <select class="select">
-                      <option value="1">Standard-Delivery- $5.00</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                      <option value="4">Four</option>
-                    </select>
-                  </div> -->
-
                   <h5 class="text-uppercase mb-3">Give code</h5>
 
                   <div class="mb-5">

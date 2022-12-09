@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/shared/models/product.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductsService } from 'src/app/core/services/products.service';
+import { Cart } from '../../../../shared/models/cart.model';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,8 +34,12 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  onAddToCart() {
-    this.shoppingService.addNewCartItem();
-    this.shoppingService.addProductInCart(this.product).subscribe();
+  onAddToCart(product: IProduct) {
+    let quantity:number = 1;
+    let cart = new Cart();
+    cart.product = product;
+    cart.productId = product.id;
+    cart.quantity = quantity;
+    this.shoppingService.addProductInCart(cart).subscribe();
   }
 }

@@ -15,8 +15,8 @@ import { tap } from 'rxjs/operators';
 export class HeaderComponent implements OnInit, OnDestroy {
   navbarNavigation: string[] = ['all', 'electronics', 'fashion', 'jewelery'];
   isAuthenticated = false;
-  currentShopItemCount: number = 0;
-  private subscription$1: Subscription;
+  //currentShopItemCount: number = 0;
+  //private subscription$1: Subscription;
   searchTerm: string = '';
   products: IProduct[];
 
@@ -28,11 +28,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription$1 = this.shoppingService.shoppingCartItemAdded.subscribe(
-      (number_: number) => {
-        this.currentShopItemCount = number_;
-      }
-    );
   }
 
   onGetProductsPerCategory(category: string) {
@@ -81,6 +76,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription$1.unsubscribe();
+    //this.subscription$1.unsubscribe();
   }
 }
