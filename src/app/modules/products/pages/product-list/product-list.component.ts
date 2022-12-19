@@ -2,8 +2,7 @@ import { Subscription } from 'rxjs/';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/shared/models/product.model';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import { ShoppingService } from 'src/app/core/services/shopping.service';
+
 
 @Component({
   selector: 'app-product-list',
@@ -23,8 +22,6 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private shoppingService: ShoppingService
   ) {}
 
   ngOnInit(): void {

@@ -8,7 +8,7 @@
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": true, // true to false yaptım.
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,

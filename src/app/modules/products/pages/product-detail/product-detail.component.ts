@@ -27,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
       this.id = +params['id'];
     });
 
-    this.isLoading= true;
+    this.isLoading = true;
     this.producstsService.getProduct(this.id).subscribe((product: IProduct) => {
       this.isLoading = false;
       this.product = product;
@@ -35,11 +35,15 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onAddToCart(product: IProduct) {
-    let quantity:number = 1;
-    let cart = new Cart();
-    cart.product = product;
-    cart.productId = product.id;
-    cart.quantity = quantity;
+    let quantity: number = 1;
+    let cart = new Cart(
+      product.id,
+      product,
+      quantity,
+      undefined,
+      undefined,
+      undefined
+    );
     this.shoppingService.addProductInCart(cart).subscribe();
   }
 }

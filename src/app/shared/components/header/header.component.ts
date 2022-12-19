@@ -1,8 +1,6 @@
-import { ShoppingService } from './../../../core/services/shopping.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { IProduct } from '../../models/product.model';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { tap } from 'rxjs/operators';
@@ -15,19 +13,23 @@ import { tap } from 'rxjs/operators';
 export class HeaderComponent implements OnInit, OnDestroy {
   navbarNavigation: string[] = ['all', 'electronics', 'fashion', 'jewelery'];
   isAuthenticated = false;
-  //currentShopItemCount: number = 0;
-  //private subscription$1: Subscription;
   searchTerm: string = '';
   products: IProduct[];
+  displaySearchInput = true;
+  url: string;
 
   constructor(
     private router: Router,
-    private shoppingService: ShoppingService,
     private productsService: ProductsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.url = this.route.snapshot.url.join('');
+    if(this.url === 'cart') {
+      this.displaySearchInput = false;
+    }
   }
 
   onGetProductsPerCategory(category: string) {
@@ -41,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.products = products;
           this.productsService.productsChanged.next(this.products);
         });
-        this.clearText();
+      this.clearText();
     } else {
       this.productsService
         .getMenAndWomenCategoryProducts()
@@ -53,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe();
-        this.clearText();
+      this.clearText();
     }
   }
 
@@ -66,10 +68,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.productsService.search.next(this.searchTerm);
   }
 
-  clearText(){
+  clearText() {
     this.searchTerm = '';
     this.productsService.search.next(this.searchTerm);
-}
+  }
 
   onLogout() {
     this.authService.logout();

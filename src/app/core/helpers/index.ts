@@ -1,5 +1,8 @@
-import { characterEditor } from "./text-modifiers";
+import { characterEditor , findOcc, countItems, calculateTotalPrice} from "./text-modifiers";
 
 export {
-    characterEditor
+    characterEditor,
+    findOcc,
+    countItems,
+    calculateTotalPrice
 }

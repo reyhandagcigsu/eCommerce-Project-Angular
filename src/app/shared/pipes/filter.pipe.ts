@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IProduct } from '../models/product.model';
-import { ProductsService } from 'src/app/core/services/products.service';
+
 
 
 @Pipe({
@@ -8,7 +8,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 })
 export class FilterPipe implements PipeTransform {
 
-  constructor(private productService: ProductsService){}
+  constructor(){}
 
    transform(value: IProduct[], filterText: string, propName: string): IProduct[] {
     const result: any = [];

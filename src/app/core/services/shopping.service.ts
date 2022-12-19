@@ -1,6 +1,6 @@
 import { IProduct } from 'src/app/shared/models/product.model';
 import { Injectable } from '@angular/core';
-import { map, take, exhaustMap, filter, Observable } from 'rxjs';
+import { map, take, exhaustMap, filter, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from '../../../environments/environment';
@@ -12,7 +12,8 @@ import { Cart } from 'src/app/shared/models/cart.model';
 export class ShoppingService {
   urlFirebaseRealtimeDbApiDomain: string =
     environment.FirebaseRealtimeDbApiDomain;
-  
+    cartItemCount = new Subject<Number>;
+    cartItems : Cart[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

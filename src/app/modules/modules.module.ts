@@ -13,7 +13,6 @@ import { NotFoundModule } from './not-found/not-found.module';
   imports: [
     CommonModule,
     ModulesRoutingModule,
-
     ProductsModule,
     CartModule,
     LoginModule,

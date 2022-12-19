@@ -16,7 +16,8 @@ import { PlaceHolderDirective } from './directives/place-holder.directive';
     LoadingSpinnerComponent,
     FilterPipe,
     AlertComponent,
-    PlaceHolderDirective
+    PlaceHolderDirective,
+   
   ],
   imports: [
     CommonModule,
@@ -30,6 +31,7 @@ import { PlaceHolderDirective } from './directives/place-holder.directive';
     AlertComponent,
     FormsModule,
     PlaceHolderDirective,
+  
   ]
 })
 export class SharedModule { }

@@ -1,51 +1,56 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand">E-Sales</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li
-            class="nav-item"
-            routerLinkActive="active"
-            *ngFor="let category of navbarNavigation; let i = index"
+  <div class="container-fluid">
+    <a class="navbar-brand">E-Sales</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngFor="let category of navbarNavigation; let i = index"
+        >
+          <a
+            class="nav-link active"
+            aria-current="page"
+            [routerLink]="['/products/category', category]"
+            (click)="onGetProductsPerCategory(category)"
           >
-            <a
-              class="nav-link active"
-              aria-current="page"
-              [routerLink]="['/products/category', category]"
-              (click)="onGetProductsPerCategory(category)"
-            >
-              {{ category }}
-            </a>
-          </li>
-        </ul>
-        <form class="d-flex">
+            {{ category }}
+          </a>
+        </li>
+      </ul>
+      
+        <form class="d-flex" *ngIf="displaySearchInput else notDisplay">
           <input
-             name="searchTerm"
+            name="searchTerm"
             class="form-control me-2"
             type="search"
-            placeholder="Search"
+            placeholder="Search Here"
             aria-label="Search"
             [(ngModel)]="searchTerm"
             (keyup)="search($event)"
+            (click)="clearText()"
+            style="cursor: pointer"
           />
         </form>
-        <button class="btn btn-default basket-button" (click)="openCart()">
-          <i class="fas fa-cart-plus"></i>
-           <div class="badge bg-danger"> buraya sayı getir</div>
-        </button>
-  
-       <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
-      </div>
+        <ng-template #notDisplay></ng-template>
+
+      <button class="btn btn-default basket-button" (click)="openCart()">
+        <i class="fas fa-cart-plus"></i>
+        <div class="badge bg-danger">buraya sayı getir</div>
+      </button>
+
+      <a style="cursor: pointer" (click)="onLogout()">Logout</a>
     </div>
-  </nav>
+  </div>
+</nav>
