@@ -1,10 +1,11 @@
 import { IProduct } from 'src/app/shared/models/product.model';
 import { Injectable } from '@angular/core';
-import { map, take, exhaustMap, filter, Observable, Subject } from 'rxjs';
+import { take, exhaustMap } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from '../../../environments/environment';
 import { Cart } from 'src/app/shared/models/cart.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,9 @@ import { Cart } from 'src/app/shared/models/cart.model';
 export class ShoppingService {
   urlFirebaseRealtimeDbApiDomain: string =
     environment.FirebaseRealtimeDbApiDomain;
-    cartItemCount = new Subject<Number>;
-    cartItems : Cart[] = [];
+    shoppingCartItemAdded = new Subject<number>(); 
+    shoppingCartChanged = new Subject<Cart[]>();
+    currentShopItemCount = 0;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -49,6 +51,18 @@ export class ShoppingService {
       })
     );
   }
+
+
+  addNewCartItem(){
+    this.currentShopItemCount++;
+    this.shoppingCartItemAdded.next(this.currentShopItemCount)
+  }
+
+   setShoppingCartItemCount(count:number){
+    this.currentShopItemCount=count;
+    this.shoppingCartItemAdded.next(this.currentShopItemCount);
+  } 
+
 
   deleteProductsFromCart(key: string) {
     return this.http.delete<void>(

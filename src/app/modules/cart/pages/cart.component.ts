@@ -1,5 +1,5 @@
 import { ShoppingService } from 'src/app/core/services/shopping.service';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Cart } from '../../../shared/models/cart.model';
 import { IProduct } from 'src/app/shared/models/product.model';
@@ -15,6 +15,10 @@ export class CartComponent implements OnInit, OnDestroy {
   totalPrice: number;
   totalQuantity: number;
   userID = JSON.parse(localStorage.getItem('userData')).id;
+  subscription1$: Subscription;
+  subscription2$: Subscription;
+  subscription3$: Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(private shoppingService: ShoppingService) {}
 
@@ -23,7 +27,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.shoppingService
+    this.subscription1$ = this.shoppingService
       .getProductsInCart()
       .pipe(
         map((res) => {
@@ -47,10 +51,13 @@ export class CartComponent implements OnInit, OnDestroy {
             tempCarts.push(cart);
           }
         });
+        this.shoppingService.shoppingCartChanged.next(tempCarts.slice()); // burası sepetteki ürün sayıısnı almak için
         this.carts = findOcc(tempCarts, ourKey);
         this.totalQuantity = countItems(this.carts);
         this.totalPrice = calculateTotalPrice(this.carts);
       });
+
+      this.subscriptions.push(this.subscription1$);
   }
 
   onAddToCart(product: IProduct) {
@@ -62,21 +69,23 @@ export class CartComponent implements OnInit, OnDestroy {
       undefined,
       undefined,
       undefined
-    ); // key burda elimde yok ama class constructor da optional yaptım sorun olur mu?
-    this.shoppingService
+    );
+    this.subscription2$ = this.shoppingService
       .addProductInCart(cart)
       .subscribe(() => this.getProducts());
+
+      this.subscriptions.push(this.subscription2$);
   }
 
   deleteItemFromCart(key: string) {
-    this.shoppingService
+    this.subscription3$ = this.shoppingService
       .deleteProductsFromCart(key)
       .subscribe(() => this.getProducts());
+
+       this.subscriptions.push(this.subscription3$);
   }
 
-  deleteCart(key: string, cart: Cart) {
-    // keyleri nasıl alcam?
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-
-  ngOnDestroy(): void {}
 }

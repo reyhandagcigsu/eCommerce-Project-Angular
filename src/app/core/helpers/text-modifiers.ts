@@ -4,8 +4,6 @@ export function characterEditor(text: string) {
   return text?.replace(/'/g, '').replace(/ /g, '-');
 }
 
-
-
 export function findOcc(carts, ourKey) {
   let arr: Cart[] = [];
   carts.forEach((cart) => {
@@ -34,25 +32,20 @@ export function findOcc(carts, ourKey) {
 }
 
 export function countItems(arr) {
-    let quantityArr = [];
-    arr.forEach((cart) => {
-      quantityArr.push(cart.quantity);
-    });
-    let totalQuantity = quantityArr.reduce(
-      (acc, curr) => acc + curr,
-      0
-    );
-    return totalQuantity;
-  }
+  let quantityArr = [];
+  arr.forEach((cart) => {
+    quantityArr.push(cart.quantity);
+  });
+  let totalQuantity = quantityArr.reduce((acc, curr) => acc + curr, 0);
+  return totalQuantity;
+}
 
-  export function calculateTotalPrice(arr) {
-    let priceArr = [];
-    arr.forEach((cart) => {
-      priceArr.push(cart.quantity * cart.product.price);
-    });
-    let totalPrice = priceArr.reduce(
-      (acc, curr) => acc + curr,
-      0
-    );
-    return totalPrice;
-  }
+export function calculateTotalPrice(arr) {
+  let priceArr = [];
+  arr.forEach((cart) => {
+    priceArr.push(cart.quantity * cart.product.price);
+  });
+  let totalPrice = priceArr.reduce((acc, curr) => acc + curr, 0);
+  totalPrice = Math.round(totalPrice * 100) / 100;
+  return totalPrice;
+}

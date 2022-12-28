@@ -1,9 +1,12 @@
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IProduct } from '../../models/product.model';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { tap } from 'rxjs/operators';
+import { ShoppingService } from 'src/app/core/services/shopping.service';
+import { Cart } from 'src/app/shared/models/cart.model';
 
 @Component({
   selector: 'app-header',
@@ -18,18 +21,44 @@ export class HeaderComponent implements OnInit, OnDestroy {
   displaySearchInput = true;
   url: string;
 
+  subscription1$: Subscription;
+  subscription2$: Subscription;
+  subscription3$: Subscription;
+  subscription4$: Subscription;
+  subscriptions: Subscription[] = [];
+
+  currentShopItemCount: number;
+
   constructor(
     private router: Router,
     private productsService: ProductsService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private shoppingService: ShoppingService
   ) {}
 
   ngOnInit(): void {
     this.url = this.route.snapshot.url.join('');
-    if(this.url === 'cart') {
+    if (this.url === 'cart') {
       this.displaySearchInput = false;
     }
+
+    this.subscription1$ = this.shoppingService.shoppingCartChanged.subscribe(
+      (carts: Cart[]) => {
+        this.currentShopItemCount = carts.length;
+        console.log(carts);
+      }
+    );
+
+    this.subscriptions.push(this.subscription1$);
+
+    this.subscription2$ = this.shoppingService.shoppingCartItemAdded.subscribe(
+      (number_: number) => {
+        this.currentShopItemCount = number_;
+      }
+    );
+
+    this.subscriptions.push(this.subscription2$);
   }
 
   onGetProductsPerCategory(category: string) {
@@ -37,15 +66,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.clearText();
       this.router.navigate(['/products']);
     } else if (category !== 'fashion') {
-      this.productsService
+      this.subscription3$ = this.productsService
         .getCategoryProducts(category)
         .subscribe((products: IProduct[]) => {
           this.products = products;
           this.productsService.productsChanged.next(this.products);
         });
+      this.subscriptions.push(this.subscription3$);
       this.clearText();
     } else {
-      this.productsService
+      this.subscription4$ = this.productsService
         .getMenAndWomenCategoryProducts()
         .pipe(
           tap((products) => {
@@ -55,6 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe();
+      this.subscriptions.push(this.subscription4$);
       this.clearText();
     }
   }
@@ -78,6 +109,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.subscription$1.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }
